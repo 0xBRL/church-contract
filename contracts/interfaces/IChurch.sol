@@ -50,19 +50,12 @@ interface IChurch {
      */
     function viewWeddingById(uint256 _id) external view returns (Wedding);
 
-    // /**
-    //  * @notice Get the wedding by id
-    //  * @param _weddingId: ID of the wedding
-    //  * @dev Callable by users
-    //  */
-    // function viewWeddingById(uint _weddingId) external view;
-
-    // /**
-    //  * @notice Get the wedding by participant address
-    //  * @param _participant: Address of the participant
-    //  * @dev Callable by users
-    //  */
-    // function viewWeddingsByParticipant(address _participant) external;
+    /**
+     * @notice Get the weddings id by participant address
+     * @param _participant: Address of the participant
+     * @dev Callable by users
+     */
+    function viewWeddingsIdByParticipant(address _participant) external view returns (uint256[] memory);
 
     /**======= MANAGEMENT =======*/
     /**

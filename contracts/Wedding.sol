@@ -72,4 +72,26 @@ contract Wedding is IWedding {
     function viewParticipants() external view override returns (address[] memory) {
         return union.participants;
     }
+
+    function viewApprovals() external view override returns (address[] memory) {
+        address[] memory approvals = union.participants;
+        for (uint256 cursor = 0; cursor < approvals.length; cursor++) {
+            address participant = approvals[cursor];
+            if (union.approvals[participant] == false) {
+                delete approvals[cursor];
+            }
+        }
+        return approvals;
+    }
+
+    function viewRevocations() external view override returns (address[] memory) {
+        address[] memory revocations = union.participants;
+        for (uint256 cursor = 0; cursor < revocations.length; cursor++) {
+            address participant = revocations[cursor];
+            if (union.revocations[participant] == false) {
+                delete revocations[cursor];
+            }
+        }
+        return revocations;
+    }
 }

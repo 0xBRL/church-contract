@@ -54,6 +54,10 @@ contract Church is IChurch, Ownable {
         return weddings[_id];
     }
 
+    function viewWeddingsIdByParticipant(address _participant) public view returns (uint256[] memory) {
+        return book.weddingsForParticipant[_participant];
+    }
+
     function transferBalanceForOwner() public onlyOwner {
         payable(owner()).transfer(viewBalance());
     }

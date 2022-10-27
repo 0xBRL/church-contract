@@ -4,8 +4,9 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import useChurchTestsHook from "../../../hooks/useChurchTestsHook";
 import { ethers } from "hardhat";
 import { createWedding } from "../../../helpers/createWeddings";
+import { BigNumber } from "ethers";
 
-export default function testCreateWeddings() {
+export default function testCreateWeddings(): void {
   const churchTests = useChurchTestsHook();
 
   it("Should create the first wedding", async function (): Promise<void> {
@@ -68,6 +69,32 @@ export default function testCreateWeddings() {
     }
 
     expect(await church.viewBalance()).to.equal(ethers.utils.parseEther("0.1").mul(5));
+  });
+
+  it("Should create the 3 weddings of the same participant", async function (): Promise<void> {
+    const { church, alice, othersAddrs } = await loadFixture(churchTests);
+
+    for (let cursor = 0; cursor < 3; cursor++) {
+      const addr1 = othersAddrs[cursor];
+
+      await expect(
+        createWedding({
+          church,
+          participants: [addr1.address, alice.address],
+          owner: addr1,
+          isAsync: true,
+        }),
+        `create the ${cursor} wedding and check event`
+      )
+        .to.emit(church, "NewWedding")
+        .withArgs(addr1.address, cursor);
+    }
+
+    expect(await church.viewWeddingsIdByParticipant(alice.address)).to.eqls([
+      BigNumber.from(0),
+      BigNumber.from(1),
+      BigNumber.from(2),
+    ]);
   });
 
   it("Should create the weddings with 3 participants", async function (): Promise<void> {

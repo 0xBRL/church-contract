@@ -42,4 +42,16 @@ interface IWedding {
      * @dev Callable by users
      */
     function viewParticipants() external returns (address[] memory);
+
+    /**
+     * @notice View all approvals
+     * @dev Callable by users
+     */
+    function viewApprovals() external returns (address[] memory);
+
+    /**
+     * @notice View all revocations
+     * @dev Callable by users
+     */
+    function viewRevocations() external returns (address[] memory);
 }
