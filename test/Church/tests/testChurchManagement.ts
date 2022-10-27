@@ -110,7 +110,7 @@ function testChurchManagementBalance() {
   });
 
   it("Should transfer balance is zero for owner", async function (): Promise<void> {
-    const { church, owner, othersAddrs } = await loadFixture(churchTests);
+    const { church, owner } = await loadFixture(churchTests);
     const amount = 0;
     const newFee = ethers.utils.parseEther("0.025");
     await (await church.connect(owner).setFee(newFee)).wait();

@@ -10,7 +10,7 @@ interface WeddingsConfig {
 interface CreateWeddingConfigInner {
   church: Church;
   participants: string[];
-  owner: any;
+  owner: string;
   value?: string;
 }
 interface CreateWeddingConfig extends WeddingsConfig, CreateWeddingConfigInner {}
