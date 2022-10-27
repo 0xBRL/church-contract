@@ -1,14 +1,21 @@
 {
   "name": "church-contract",
+  "version": "0.0.0",
+  "description": "Church contract",
+  "private": true,
+  "license": "MIT",
+  "engines" : { 
+    "npm" : ">=8.0.0 <9.0.0",
+    "node" : ">=16.0.0 <17.0.0"
+  },
   "scripts": {
-    "start": "hardhat node",
     "compile": "hardhat compile",
-    "cover": "hardhat coverage",
     "test": "hardhat test",
-    "deploy:local": "hardhat deploy --network localhost",
-    "deploy:ropsen": "hardhat deploy --network ropsten",
+    "test:coverage": "hardhat coverage",
+    "test:size-contracts": "npx hardhat size-contracts",
     "deploy:bscTestnet": "hardhat deploy --network bscTestnet",
-    "clean": "hardhat clean"
+    "deploy:bscMainnet": "hardhat deploy --network bscMainnet",
+    "clean": "hardhat clean && rm -rf coverage.json coverage/ cache/"
   },
   "devDependencies": {
     "@ethersproject/abi": "5.7.0",
