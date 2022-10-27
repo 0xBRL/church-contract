@@ -4,15 +4,17 @@
   "description": "Church contract",
   "private": true,
   "license": "MIT",
-  "engines" : { 
-    "npm" : ">=8.0.0 <9.0.0",
-    "node" : ">=16.0.0 <17.0.0"
+  "engines": {
+    "npm": ">=8.0.0 <9.0.0",
+    "node": ">=16.0.0 <17.0.0"
   },
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test",
     "test:coverage": "hardhat coverage",
     "test:size-contracts": "npx hardhat size-contracts",
+    "format:write": "prettier --write '**/*.{js,ts,sol}'",
+    "format:check": "prettier --check '**/*.{js,ts,sol}'",
     "deploy:bscTestnet": "hardhat deploy --network bscTestnet",
     "deploy:bscMainnet": "hardhat deploy --network bscMainnet",
     "clean": "hardhat clean && rm -rf coverage.json coverage/ cache/"
@@ -34,6 +36,8 @@
     "ethers": "5.0.0",
     "hardhat": "2.11.2",
     "hardhat-gas-reporter": "1.0.9",
+    "prettier": "2.3.0",
+    "prettier-plugin-solidity": "1.0.0-beta.24",
     "solidity-coverage": "0.8.2",
     "ts-node": "10.9.1",
     "typechain": "8.1.0",
