@@ -3,12 +3,13 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import useChurchTestsHook from "../../hooks/useChurchTestsHook";
 import { ethers } from "hardhat";
+import { createWedding, createWeddings } from "../../helpers/createWeddings";
 
 function testChurchManagementFee() {
-  const { deployChurchFixture, createWedding } = useChurchTestsHook();
+  const churchTests = useChurchTestsHook();
 
   it("Should change fee for the one ether", async function (): Promise<void> {
-    const { church, owner, alice, STARTING_FEE } = await loadFixture(deployChurchFixture);
+    const { church, owner, alice, STARTING_FEE } = await loadFixture(churchTests);
     const newFee = ethers.utils.parseEther("1");
 
     expect(await church.connect(alice).viewFee()).to.equal(STARTING_FEE);
@@ -17,7 +18,7 @@ function testChurchManagementFee() {
   });
 
   it("Should order with the new fee", async function (): Promise<void> {
-    const { church, owner, alice, bob } = await loadFixture(deployChurchFixture);
+    const { church, owner, alice, bob } = await loadFixture(churchTests);
     const participants = [alice.address, bob.address];
     const newFee = ethers.utils.parseEther("1");
 
@@ -35,7 +36,7 @@ function testChurchManagementFee() {
   });
 
   it("Should change fee for the zero ether", async function (): Promise<void> {
-    const { church, owner, alice, bob } = await loadFixture(deployChurchFixture);
+    const { church, owner, alice, bob } = await loadFixture(churchTests);
     const participants = [alice.address, bob.address];
     const newFee = ethers.utils.parseEther("0");
 
@@ -54,7 +55,7 @@ function testChurchManagementFee() {
   });
 
   it("Shouldn't change fee because don't owner", async function (): Promise<void> {
-    const { church, alice } = await loadFixture(deployChurchFixture);
+    const { church, alice } = await loadFixture(churchTests);
     const oldFee = ethers.utils.parseEther("0.1");
     const newFee = ethers.utils.parseEther("1");
 
@@ -64,10 +65,10 @@ function testChurchManagementFee() {
 }
 
 function testChurchManagementBalance() {
-  const { deployChurchFixture, createWeddings } = useChurchTestsHook();
+  const churchTests = useChurchTestsHook();
 
   it("Should create 5 weddings with 'fee = 0.025 ETHER'", async function (): Promise<void> {
-    const { church, owner, othersAddrs } = await loadFixture(deployChurchFixture);
+    const { church, owner, othersAddrs } = await loadFixture(churchTests);
     const amount = 5;
     const newFee = ethers.utils.parseEther("0.025");
 
@@ -85,7 +86,7 @@ function testChurchManagementBalance() {
   });
 
   it("Should transfer balance for owner", async function (): Promise<void> {
-    const { church, owner, othersAddrs } = await loadFixture(deployChurchFixture);
+    const { church, owner, othersAddrs } = await loadFixture(churchTests);
     const amount = 5;
     const newValue = "0.025";
     const newFee = ethers.utils.parseEther(newValue);
@@ -109,7 +110,7 @@ function testChurchManagementBalance() {
   });
 
   it("Should transfer balance is zero for owner", async function (): Promise<void> {
-    const { church, owner, othersAddrs } = await loadFixture(deployChurchFixture);
+    const { church, owner, othersAddrs } = await loadFixture(churchTests);
     const amount = 0;
     const newFee = ethers.utils.parseEther("0.025");
     await (await church.connect(owner).setFee(newFee)).wait();
@@ -124,7 +125,7 @@ function testChurchManagementBalance() {
   });
 
   it("Shouldn't transfer balance because not owner", async function (): Promise<void> {
-    const { church, alice, othersAddrs } = await loadFixture(deployChurchFixture);
+    const { church, alice, othersAddrs } = await loadFixture(churchTests);
     const amount = 2;
 
     await createWeddings({

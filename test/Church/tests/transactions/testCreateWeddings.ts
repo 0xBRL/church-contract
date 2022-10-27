@@ -3,12 +3,13 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import useChurchTestsHook from "../../../hooks/useChurchTestsHook";
 import { ethers } from "hardhat";
+import { createWedding } from "../../../helpers/createWeddings";
 
 export default function testCreateWeddings() {
-  const { deployChurchFixture, createWedding } = useChurchTestsHook();
+  const churchTests = useChurchTestsHook();
 
   it("Should create the first wedding", async function (): Promise<void> {
-    const { church, alice, bob } = await loadFixture(deployChurchFixture);
+    const { church, alice, bob } = await loadFixture(churchTests);
     const participants = [alice.address, bob.address];
     const id = 0;
 
@@ -28,7 +29,7 @@ export default function testCreateWeddings() {
   });
 
   it("Should view the wedding by id", async function (): Promise<void> {
-    const { Wedding, church, alice, bob } = await loadFixture(deployChurchFixture);
+    const { Wedding, church, alice, bob } = await loadFixture(churchTests);
     const participants = [alice.address, bob.address];
     const id = 0;
 
@@ -47,7 +48,7 @@ export default function testCreateWeddings() {
   });
 
   it("Should create the 5 weddings", async function (): Promise<void> {
-    const { church, othersAddrs } = await loadFixture(deployChurchFixture);
+    const { church, othersAddrs } = await loadFixture(churchTests);
 
     for (let cursor = 0; cursor < 5; cursor++) {
       const addr1 = othersAddrs[cursor];
@@ -70,7 +71,7 @@ export default function testCreateWeddings() {
   });
 
   it("Should create the weddings with 3 participants", async function (): Promise<void> {
-    const { church, alice, bob, carol } = await loadFixture(deployChurchFixture);
+    const { church, alice, bob, carol } = await loadFixture(churchTests);
 
     await expect(
       createWedding({
@@ -85,7 +86,7 @@ export default function testCreateWeddings() {
   });
 
   it("Shouldn't create the weddings because same address", async function (): Promise<void> {
-    const { church, alice } = await loadFixture(deployChurchFixture);
+    const { church, alice } = await loadFixture(churchTests);
 
     await expect(
       createWedding({
@@ -98,7 +99,7 @@ export default function testCreateWeddings() {
   });
 
   it("Shouldn't create the wedding because any funds", async function (): Promise<void> {
-    const { church, alice, bob, carol } = await loadFixture(deployChurchFixture);
+    const { church, alice, bob, carol } = await loadFixture(churchTests);
 
     await expect(
       createWedding({
