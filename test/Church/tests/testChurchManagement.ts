@@ -139,7 +139,7 @@ function testChurchManagementBalance() {
   });
 }
 
-export default function testChurchManagement() {
+export default function testChurchManagement(): void {
   describe("💸 Fees", testChurchManagementFee);
   describe("🍯 Balance", testChurchManagementBalance);
 }

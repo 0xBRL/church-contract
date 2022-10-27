@@ -46,6 +46,12 @@ contract Church is IChurch, Ownable {
         emit RevokeWedding(msg.sender, _weddingId);
     }
 
+    function donate() public payable {
+        require(msg.value > 0, "Amount donated equal to or below 0");
+
+        emit NewDonation(msg.sender, msg.value);
+    }
+
     function viewWeddingsAmount() public view returns (uint256) {
         return weddings.length;
     }

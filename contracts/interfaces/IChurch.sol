@@ -15,6 +15,7 @@ interface IChurch {
     event NewWedding(address indexed creator, uint256 id);
     event ApproveWedding(address indexed creator, uint256 id);
     event RevokeWedding(address indexed creator, uint256 id);
+    event NewDonation(address indexed donor, uint256 amount);
 
     /**
      * @notice Create the new wedding
@@ -36,6 +37,12 @@ interface IChurch {
      * @dev Callable by users
      */
     function revokeWedding(uint256 _weddingId) external;
+
+    /**
+     * @notice Donate of the church
+     * @dev Callable by users
+     */
+    function donate() external payable;
 
     /**
      * @notice View current number of weddings

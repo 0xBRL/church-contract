@@ -19,6 +19,7 @@ interface CreateWeddingsConfigInner {
   church: Church;
   addrs: SignerWithAddress[];
   amount: number;
+  value?: string;
 }
 interface CreateWeddingsConfig extends WeddingsConfig, CreateWeddingsConfigInner {}
 
