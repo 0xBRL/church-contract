@@ -11,7 +11,7 @@ interface IWedding {
     struct Union {
         Status status;
         address[] participants;
-        mapping(address => uint) indexOf;
+        mapping(address => uint256) indexOf;
         mapping(address => bool) inserted;
         mapping(address => bool) approvals;
         mapping(address => bool) revocations;

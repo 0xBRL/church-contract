@@ -9,7 +9,7 @@ contract Wedding is IWedding {
     constructor(address[] memory _participants) {
         require(_participants.length > 0, "Need at least one participant");
 
-        for (uint cursor = 0; cursor < _participants.length; cursor++) {
+        for (uint256 cursor = 0; cursor < _participants.length; cursor++) {
             address participant = _participants[cursor];
             require(union.inserted[participant] == false, "Repeat participants");
 
@@ -49,12 +49,7 @@ contract Wedding is IWedding {
         _;
     }
 
-    function approve(address _participant)
-        external
-        onlyParticipants(_participant)
-        isActive
-        notAprroved(_participant)
-    {
+    function approve(address _participant) external onlyParticipants(_participant) isActive notAprroved(_participant) {
         union.approvals[_participant] = true;
     }
 
@@ -74,12 +69,7 @@ contract Wedding is IWedding {
         return union.status;
     }
 
-    function viewParticipants()
-        external
-        view
-        override
-        returns (address[] memory)
-    {
+    function viewParticipants() external view override returns (address[] memory) {
         return union.participants;
     }
 }

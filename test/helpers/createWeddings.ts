@@ -13,25 +13,16 @@ interface CreateWeddingConfigInner {
   owner: any;
   value?: string;
 }
-interface CreateWeddingConfig
-  extends WeddingsConfig,
-    CreateWeddingConfigInner {}
+interface CreateWeddingConfig extends WeddingsConfig, CreateWeddingConfigInner {}
 
 interface CreateWeddingsConfigInner {
   church: Church;
   addrs: SignerWithAddress[];
   amount: number;
 }
-interface CreateWeddingsConfig
-  extends WeddingsConfig,
-    CreateWeddingsConfigInner {}
+interface CreateWeddingsConfig extends WeddingsConfig, CreateWeddingsConfigInner {}
 
-function createWeddingAsync({
-  church,
-  participants,
-  owner,
-  value = "0.1",
-}: CreateWeddingConfigInner) {
+function createWeddingAsync({ church, participants, owner, value = "0.1" }: CreateWeddingConfigInner) {
   return church.connect(owner).createWedding(participants, {
     value: ethers.utils.parseEther(value),
   });
@@ -43,12 +34,7 @@ async function createWeddingSync(config: CreateWeddingConfigInner) {
   return contractReceipt;
 }
 
-async function createWeddingsAsync({
-  church,
-  addrs,
-  amount,
-  ...configs
-}: CreateWeddingsConfigInner) {
+async function createWeddingsAsync({ church, addrs, amount, ...configs }: CreateWeddingsConfigInner) {
   const contracts = [];
   let addrCursor = 0;
   for (let cursor = 0; cursor < amount; cursor++) {
@@ -71,11 +57,7 @@ async function createWeddingsAsync({
   return contracts;
 }
 
-function createWeddingsSync({
-  church,
-  addrs,
-  amount,
-}: CreateWeddingsConfigInner) {
+function createWeddingsSync({ church, addrs, amount }: CreateWeddingsConfigInner) {
   const contracts = [];
   for (let cursor = 0; cursor < amount; cursor++) {
     const addr1 = addrs[Math.floor(Math.random() * addrs.length)];
@@ -87,9 +69,7 @@ function createWeddingsSync({
       owner: Math.random() > 0.5 ? addr1 : addr2,
     });
 
-    contracts.push(
-      contractReceipt
-    );
+    contracts.push(contractReceipt);
   }
 
   return contracts;

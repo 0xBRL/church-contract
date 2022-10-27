@@ -8,9 +8,7 @@ function testChurchManagementFee() {
   const { deployChurchFixture, createWedding } = useChurchTestsHook();
 
   it("Should change fee for the one ether", async function (): Promise<void> {
-    const { church, owner, alice, STARTING_FEE } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, owner, alice, STARTING_FEE } = await loadFixture(deployChurchFixture);
     const newFee = ethers.utils.parseEther("1");
 
     expect(await church.connect(alice).viewFee()).to.equal(STARTING_FEE);
@@ -19,9 +17,7 @@ function testChurchManagementFee() {
   });
 
   it("Should order with the new fee", async function (): Promise<void> {
-    const { church, owner, alice, bob } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, owner, alice, bob } = await loadFixture(deployChurchFixture);
     const participants = [alice.address, bob.address];
     const newFee = ethers.utils.parseEther("1");
 
@@ -39,9 +35,7 @@ function testChurchManagementFee() {
   });
 
   it("Should change fee for the zero ether", async function (): Promise<void> {
-    const { church, owner, alice, bob } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, owner, alice, bob } = await loadFixture(deployChurchFixture);
     const participants = [alice.address, bob.address];
     const newFee = ethers.utils.parseEther("0");
 
@@ -64,9 +58,7 @@ function testChurchManagementFee() {
     const oldFee = ethers.utils.parseEther("0.1");
     const newFee = ethers.utils.parseEther("1");
 
-    await expect(church.connect(alice).setFee(newFee)).to.revertedWith(
-      "Ownable: caller is not the owner"
-    );
+    await expect(church.connect(alice).setFee(newFee)).to.revertedWith("Ownable: caller is not the owner");
     expect(await church.connect(alice).viewFee()).to.equal(oldFee);
   });
 }
@@ -75,9 +67,7 @@ function testChurchManagementBalance() {
   const { deployChurchFixture, createWeddings } = useChurchTestsHook();
 
   it("Should create 5 weddings with 'fee = 0.025 ETHER'", async function (): Promise<void> {
-    const { church, owner, othersAddrs } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, owner, othersAddrs } = await loadFixture(deployChurchFixture);
     const amount = 5;
     const newFee = ethers.utils.parseEther("0.025");
 
@@ -95,9 +85,7 @@ function testChurchManagementBalance() {
   });
 
   it("Should transfer balance for owner", async function (): Promise<void> {
-    const { church, owner, othersAddrs } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, owner, othersAddrs } = await loadFixture(deployChurchFixture);
     const amount = 5;
     const newValue = "0.025";
     const newFee = ethers.utils.parseEther(newValue);
@@ -116,16 +104,12 @@ function testChurchManagementBalance() {
     const receipt = await transaction.wait();
     const gasSpent = receipt.gasUsed.mul(receipt.effectiveGasPrice);
 
-    expect(await owner.getBalance()).to.equal(
-      oldBalance.sub(gasSpent).add(newFee.mul(amount))
-    );
+    expect(await owner.getBalance()).to.equal(oldBalance.sub(gasSpent).add(newFee.mul(amount)));
     expect(await church.viewBalance()).to.equal(0);
   });
 
   it("Should transfer balance is zero for owner", async function (): Promise<void> {
-    const { church, owner, othersAddrs } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, owner, othersAddrs } = await loadFixture(deployChurchFixture);
     const amount = 0;
     const newFee = ethers.utils.parseEther("0.025");
     await (await church.connect(owner).setFee(newFee)).wait();
@@ -135,16 +119,12 @@ function testChurchManagementBalance() {
     const receipt = await transaction.wait();
     const gasSpent = receipt.gasUsed.mul(receipt.effectiveGasPrice);
 
-    expect(await owner.getBalance()).to.equal(
-      oldBalance.sub(gasSpent).add(newFee.mul(amount))
-    );
+    expect(await owner.getBalance()).to.equal(oldBalance.sub(gasSpent).add(newFee.mul(amount)));
     expect(await church.viewBalance()).to.equal(0);
   });
 
   it("Shouldn't transfer balance because not owner", async function (): Promise<void> {
-    const { church, alice, othersAddrs } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, alice, othersAddrs } = await loadFixture(deployChurchFixture);
     const amount = 2;
 
     await createWeddings({
@@ -154,9 +134,7 @@ function testChurchManagementBalance() {
       isAsync: true,
     });
 
-    await expect(
-      church.connect(alice).transferBalanceForOwner()
-    ).to.revertedWith("Ownable: caller is not the owner");
+    await expect(church.connect(alice).transferBalanceForOwner()).to.revertedWith("Ownable: caller is not the owner");
   });
 }
 

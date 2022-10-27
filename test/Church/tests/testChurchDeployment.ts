@@ -13,17 +13,11 @@ export default function testChurchDeployment() {
 
   it("Should set balance to 0", async function (): Promise<void> {
     const { church } = await loadFixture(deployChurchFixture);
-    expect(
-      await church.viewBalance(),
-      "check the init balance after deploy of the contract"
-    ).to.equal(0);
+    expect(await church.viewBalance(), "check the init balance after deploy of the contract").to.equal(0);
   });
 
   it("Should set weddings list to empty", async function (): Promise<void> {
     const { church } = await loadFixture(deployChurchFixture);
-    expect(
-      await church.viewWeddingsAmount(),
-      "check the weddings length after deploy of the contract"
-    ).to.equal(0);
+    expect(await church.viewWeddingsAmount(), "check the weddings length after deploy of the contract").to.equal(0);
   });
 }

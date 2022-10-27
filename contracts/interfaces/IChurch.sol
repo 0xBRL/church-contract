@@ -7,14 +7,14 @@ interface IChurch {
     /**======= WEDDING =======*/
     struct Book {
         address[] participants;
-        mapping(address => uint[]) weddingsForParticipant;
-        mapping(address => uint) indexOf;
+        mapping(address => uint256[]) weddingsForParticipant;
+        mapping(address => uint256) indexOf;
         mapping(address => bool) inserted;
     }
 
-    event NewWedding(address indexed creator, uint id);
-    event ApproveWedding(address indexed creator, uint id);
-    event RevokeWedding(address indexed creator, uint id);
+    event NewWedding(address indexed creator, uint256 id);
+    event ApproveWedding(address indexed creator, uint256 id);
+    event RevokeWedding(address indexed creator, uint256 id);
 
     /**
      * @notice Create the new wedding
@@ -28,27 +28,27 @@ interface IChurch {
      * @param _weddingId: ID of the wedding
      * @dev Callable by users
      */
-    function approveWedding(uint _weddingId) external;
+    function approveWedding(uint256 _weddingId) external;
 
     /**
      * @notice Revoke the wedding
      * @param _weddingId: ID of the wedding
      * @dev Callable by users
      */
-    function revokeWedding(uint _weddingId) external;
+    function revokeWedding(uint256 _weddingId) external;
 
     /**
      * @notice View current number of weddings
      * @dev Callable by users
      */
-    function viewWeddingsAmount() external returns (uint);
+    function viewWeddingsAmount() external returns (uint256);
 
     /**
      * @notice View wedding by id
      * @param _id: ID of the wedding
      * @dev Callable by users
      */
-    function viewWeddingById(uint _id) external view returns (Wedding);
+    function viewWeddingById(uint256 _id) external view returns (Wedding);
 
     // /**
     //  * @notice Get the wedding by id
@@ -76,17 +76,17 @@ interface IChurch {
      * @param _fee: New fee in ether
      * @dev Only callable by owner
      */
-    function setFee(uint _fee) external;
+    function setFee(uint256 _fee) external;
 
     /**
      * @notice View current fee fot wedding creation
      * @dev Callable by users
      */
-    function viewFee() external returns (uint);
+    function viewFee() external returns (uint256);
 
     /**
      * @notice View current balance of the Church
      * @dev Callable by users
      */
-    function viewBalance() external returns (uint);
+    function viewBalance() external returns (uint256);
 }

@@ -38,9 +38,7 @@ export default function testApproveWeddings() {
   });
 
   it("Should not approve the wedding", async function (): Promise<void> {
-    const { church, addr1, addr2, addr3, addr4 } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, addr1, addr2, addr3, addr4 } = await loadFixture(deployChurchFixture);
     await createWedding({
       church,
       participants: [addr1.address, addr2.address],
@@ -55,9 +53,7 @@ export default function testApproveWeddings() {
   });
 
   it("Should change balance after create weddings", async function (): Promise<void> {
-    const { church, addr1, addr2, addr3, addr4 } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, addr1, addr2, addr3, addr4 } = await loadFixture(deployChurchFixture);
     await createWedding({
       church,
       participants: [addr1.address, addr2.address],
@@ -79,8 +75,6 @@ export default function testApproveWeddings() {
       owner: addr1,
     });
     const id = 0;
-    await expect(
-      church.connect(addr1).approveWedding(id + 1)
-    ).to.be.revertedWith("Invalid wedding id");
+    await expect(church.connect(addr1).approveWedding(id + 1)).to.be.revertedWith("Invalid wedding id");
   });
 }

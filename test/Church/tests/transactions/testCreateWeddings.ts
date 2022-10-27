@@ -27,7 +27,7 @@ export default function testCreateWeddings() {
     expect(await church.viewBalance()).to.equal(ethers.utils.parseEther("0.1"));
   });
 
-    it("Should view the wedding by id", async function (): Promise<void> {
+  it("Should view the wedding by id", async function (): Promise<void> {
     const { Wedding, church, alice, bob } = await loadFixture(deployChurchFixture);
     const participants = [alice.address, bob.address];
     const id = 0;
@@ -66,15 +66,11 @@ export default function testCreateWeddings() {
         .withArgs(addr1.address, cursor);
     }
 
-    expect(await church.viewBalance()).to.equal(
-      ethers.utils.parseEther("0.1").mul(5)
-    );
+    expect(await church.viewBalance()).to.equal(ethers.utils.parseEther("0.1").mul(5));
   });
 
   it("Should create the weddings with 3 participants", async function (): Promise<void> {
-    const { church, alice, bob, carol } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, alice, bob, carol } = await loadFixture(deployChurchFixture);
 
     await expect(
       createWedding({
@@ -102,9 +98,7 @@ export default function testCreateWeddings() {
   });
 
   it("Shouldn't create the wedding because any funds", async function (): Promise<void> {
-    const { church, alice, bob, carol } = await loadFixture(
-      deployChurchFixture
-    );
+    const { church, alice, bob, carol } = await loadFixture(deployChurchFixture);
 
     await expect(
       createWedding({

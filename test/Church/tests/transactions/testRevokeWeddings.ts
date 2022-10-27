@@ -36,7 +36,7 @@ export default function testRevokeWeddings() {
 
     const id = 0;
     await church.connect(addr1).approveWedding(id);
-    await expect(church.connect(addr2).revokeWedding(id)).to.be.revertedWith('Only approved');
+    await expect(church.connect(addr2).revokeWedding(id)).to.be.revertedWith("Only approved");
   });
 
   it("Should not revoke as not participant", async function (): Promise<void> {
@@ -50,8 +50,8 @@ export default function testRevokeWeddings() {
     await church.connect(addr1).approveWedding(id);
     await church.connect(addr2).approveWedding(id);
 
-    await expect(church.connect(addr3).revokeWedding(id)).to.be.revertedWith('Only participants');
-    await expect(church.connect(addr4).revokeWedding(id)).to.be.revertedWith('Only participants');
+    await expect(church.connect(addr3).revokeWedding(id)).to.be.revertedWith("Only participants");
+    await expect(church.connect(addr4).revokeWedding(id)).to.be.revertedWith("Only participants");
   });
 
   it("Shouldn't revoke as it has already been revoked", async function (): Promise<void> {
@@ -66,7 +66,7 @@ export default function testRevokeWeddings() {
     await church.connect(addr2).approveWedding(id);
 
     await church.connect(addr1).revokeWedding(id);
-    await expect(church.connect(addr1).revokeWedding(id)).to.be.revertedWith('Already revoked');
+    await expect(church.connect(addr1).revokeWedding(id)).to.be.revertedWith("Already revoked");
   });
 
   it("Shouldn't revoke as invalid id", async function (): Promise<void> {
@@ -80,6 +80,6 @@ export default function testRevokeWeddings() {
     await church.connect(addr1).approveWedding(id);
     await church.connect(addr2).approveWedding(id);
 
-    await expect(church.connect(addr1).revokeWedding(id + 1)).to.be.revertedWith('Invalid wedding id');
+    await expect(church.connect(addr1).revokeWedding(id + 1)).to.be.revertedWith("Invalid wedding id");
   });
 }
